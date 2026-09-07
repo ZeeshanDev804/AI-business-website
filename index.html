@@ -1,69 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Business Suite | Automate Your Business</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-        body{background:#f8f9fa;color:#333}
-        .hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;text-align:center;padding:80px 20px}
-        .hero h1{font-size:42px;margin-bottom:10px}
-        .hero p{font-size:18px;opacity:0.9}
-        .container{max-width:1000px;margin:0 auto;padding:40px 20px}
-        .card{background:white;border-radius:12px;padding:30px;margin:20px 0;box-shadow:0 4px 15px rgba(0,0,0,0.08)}
-        .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-        .service{text-align:center;padding:20px}
-        .service-icon{font-size:40px;margin-bottom:10px}
-        .btn{display:inline-block;background:#25D366;color:white;padding:15px 30px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:20px}
-        .btn:hover{transform:scale(1.05)}
-        .demo{background:#eef2ff}
-        footer{text-align:center;padding:30px;background:#222;color:white;margin-top:40px}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Website Generator</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:#070b16;
+  color:#fff;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:250px;
+  background:#0c1222;
+  border-right:1px solid #20283a;
+  padding:25px 18px;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:35px;
+}
+
+.logo span{
+  color:#7c6cff;
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.nav button{
+  background:transparent;
+  border:0;
+  color:#9ca6ba;
+  padding:13px 15px;
+  text-align:left;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.nav button.active,
+.nav button:hover{
+  background:#171e33;
+  color:#fff;
+}
+
+/* MAIN */
+.main{
+  flex:1;
+  padding:30px;
+  overflow:auto;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:28px;
+}
+
+.topbar h1{
+  font-size:27px;
+}
+
+.badge{
+  background:#17213a;
+  border:1px solid #293657;
+  color:#9fafff;
+  padding:8px 13px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+/* GENERATOR */
+.generator{
+  max-width:1050px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:390px 1fr;
+  gap:22px;
+}
+
+.panel{
+  background:#0e1526;
+  border:1px solid #202b42;
+  border-radius:18px;
+  padding:24px;
+}
+
+.panel h2{
+  font-size:19px;
+  margin-bottom:7px;
+}
+
+.subtitle{
+  color:#8994a9;
+  font-size:13px;
+  margin-bottom:22px;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  color:#c5ccda;
+  margin:15px 0 8px;
+}
+
+input,select,textarea{
+  width:100%;
+  background:#080e1c;
+  border:1px solid #28344d;
+  color:#fff;
+  padding:13px;
+  border-radius:9px;
+  outline:none;
+}
+
+textarea{
+  height:90px;
+  resize:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#7165ff;
+}
+
+.generate{
+  width:100%;
+  margin-top:20px;
+  border:0;
+  padding:14px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#7165ff,#a855f7);
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.generate:hover{
+  opacity:.9;
+  transform:translateY(-1px);
+}
+
+/* PREVIEW */
+.preview-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.preview-head span{
+  color:#8f9ab0;
+  font-size:12px;
+}
+
+.preview{
+  background:#fff;
+  color:#111827;
+  border-radius:13px;
+  min-height:470px;
+  overflow:hidden;
+}
+
+.preview-nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 25px;
+  border-bottom:1px solid #eee;
+}
+
+.preview-logo{
+  font-weight:800;
+}
+
+.preview-links{
+  display:flex;
+  gap:18px;
+  font-size:12px;
+  color:#6b7280;
+}
+
+.hero{
+  padding:65px 30px;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:38px;
+  margin-bottom:15px;
+}
+
+.hero p{
+  max-width:550px;
+  margin:auto;
+  color:#667085;
+  line-height:1.6;
+}
+
+.hero-btn{
+  display:inline-block;
+  margin-top:25px;
+  padding:12px 22px;
+  border-radius:8px;
+  color:#fff;
+  font-weight:700;
+}
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  padding:0 25px 30px;
+}
+
+.feature{
+  background:#f6f7fb;
+  padding:18px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.feature strong{
+  display:block;
+  margin-bottom:7px;
+}
+
+.feature small{
+  color:#6b7280;
+}
+
+/* STATUS */
+.status{
+  display:none;
+  margin-top:14px;
+  padding:10px;
+  background:#121b30;
+  border-radius:8px;
+  color:#aeb8ca;
+  font-size:12px;
+  text-align:center;
+}
+
+/* MOBILE */
+@media(max-width:850px){
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    padding:18px;
+  }
+
+  .generator{
+    grid-template-columns:1fr;
+  }
+
+  .preview-links{
+    display:none;
+  }
+
+  .features{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+}
+</style>
 </head>
+
 <body>
-    <div class="hero">
-        <h1>AI Business Suite 🤖</h1>
-        <p>Automate Your Business with Artificial Intelligence</p>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="logo">AI<span>Builder</span></div>
+
+    <div class="nav">
+      <button class="active">⚡ Generator</button>
+      <button>◈ Projects</button>
+      <button>▣ Templates</button>
+      <button>⚙ Settings</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="topbar">
+      <h1>AI Website Generator</h1>
+      <div class="badge">● Demo Mode</div>
     </div>
 
-    <div class="container">
-        <div class="card">
-            <h2 style="text-align:center;margin-bottom:30px">Our AI-Powered Services</h2>
-            <div class="services">
-                <div class="service">
-                    <div class="service-icon">💬</div>
-                    <h3>AI Chatbot</h3>
-                    <p>24/7 Customer Support in Urdu & English. Reply in 1 second.</p>
-                </div>
-                <div class="service">
-                    <div class="service-icon">📅</div>
-                    <h3>Online Booking</h3>
-                    <p>Auto appointment management. No missed calls.</p>
-                </div>
-                <div class="service">
-                    <div class="service-icon">🧾</div>
-                    <h3>Invoice System</h3>
-                    <p>Generate bills in 1 click. WhatsApp delivery.</p>
-                </div>
+    <div class="generator">
+
+      <!-- FORM -->
+      <section class="panel">
+
+        <h2>Create your website</h2>
+        <p class="subtitle">
+          Describe your business and generate a professional website preview.
+        </p>
+
+        <label>Business Name</label>
+        <input id="businessName"
+               type="text"
+               placeholder="e.g. Nova Coffee">
+
+        <label>Website Type</label>
+        <select id="websiteType">
+          <option>Business</option>
+          <option>Restaurant</option>
+          <option>Portfolio</option>
+          <option>Agency</option>
+          <option>Online Store</option>
+          <option>Landing Page</option>
+        </select>
+
+        <label>Describe your website</label>
+        <textarea id="description"
+          placeholder="Example: Modern coffee shop with premium coffee, desserts and online orders."></textarea>
+
+        <label>Choose Theme</label>
+        <select id="theme">
+          <option value="#7165ff">Purple</option>
+          <option value="#2563eb">Blue</option>
+          <option value="#059669">Green</option>
+          <option value="#e11d48">Rose</option>
+          <option value="#ea580c">Orange</option>
+        </select>
+
+        <button class="generate" onclick="generateWebsite()">
+          ✨ Generate Website
+        </button>
+
+        <div class="status" id="status">
+          Creating your website...
+        </div>
+
+      </section>
+
+
+      <!-- PREVIEW -->
+      <section class="panel">
+
+        <div class="preview-head">
+          <h2>Live Preview</h2>
+          <span>Responsive Preview</span>
+        </div>
+
+        <div class="preview">
+
+          <div class="preview-nav">
+            <div class="preview-logo" id="previewLogo">
+              Your Brand
             </div>
+
+            <div class="preview-links">
+              <span>Home</span>
+              <span>Services</span>
+              <span>About</span>
+              <span>Contact</span>
+            </div>
+          </div>
+
+          <div class="hero">
+
+            <h1 id="previewTitle">
+              Build something amazing.
+            </h1>
+
+            <p id="previewDescription">
+              Create a professional online presence for your business with a modern and responsive website.
+            </p>
+
+            <div class="hero-btn"
+                 id="previewButton"
+                 style="background:#7165ff;">
+              Get Started
+            </div>
+
+          </div>
+
+          <div class="features">
+
+            <div class="feature">
+              <strong>⚡ Fast</strong>
+              <small>Modern and optimized</small>
+            </div>
+
+            <div class="feature">
+              <strong>📱 Responsive</strong>
+              <small>Works on every device</small>
+            </div>
+
+            <div class="feature">
+              <strong>✨ Modern</strong>
+              <small>Professional design</small>
+            </div>
+
+          </div>
+
         </div>
 
-        <div class="card demo">
-            <h2>🤖 Live AI Chatbot Demo</h2>
-            <p><b>Customer:</b> "Biryani ka rate kya hai?"</p>
-            <p><b>AI:</b> "Chicken Biryani Rs 350, Beef Biryani Rs 400. Order karna hai?"</p>
-            <p style="margin-top:15px;font-size:14px;opacity:0.7">Note: This is a demo. Real chatbot can connect with your WhatsApp & Database.</p>
-        </div>
+      </section>
 
-        <div style="text-align:center">
-            <a href="https://wa.me/923455561085" class="btn">📱 Contact on WhatsApp</a>
-            <p style="margin-top:10px;font-size:14px">Get Your AI Website in 24 Hours</p>
-        </div>
     </div>
 
-    <footer>
-        <p>© 2026 AI Business Suite. All Rights Reserved.</p>
-    </footer>
+  </main>
+
+</div>
+
+
+<script>
+
+function generateWebsite(){
+
+  const name =
+    document.getElementById("businessName").value.trim();
+
+  const type =
+    document.getElementById("websiteType").value;
+
+  const description =
+    document.getElementById("description").value.trim();
+
+  const theme =
+    document.getElementById("theme").value;
+
+  if(!name){
+    alert("Please enter your business name.");
+    return;
+  }
+
+  const status =
+    document.getElementById("status");
+
+  status.style.display="block";
+  status.innerText="✨ AI is creating your website preview...";
+
+  setTimeout(function(){
+
+    document.getElementById("previewLogo").innerText=name;
+
+    document.getElementById("previewTitle").innerText=
+      "Grow your " + type + " with a powerful website.";
+
+    document.getElementById("previewDescription").innerText=
+      description ||
+      "A modern professional website designed for " + name + ".";
+
+    document.getElementById("previewButton").style.background=
+      theme;
+
+    status.innerText=
+      "✅ Website generated successfully!";
+
+  },1200);
+
+}
+
+</script>
+
 </body>
 </html>
